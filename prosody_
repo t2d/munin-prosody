@@ -63,7 +63,7 @@ def main():
         else:
             memstats_re = re.compile(r"\|\s(\w+)\s+(\d+)\s+\|")
             telnet = telnetlib.Telnet(host, port)
-            telnet.write(">for k,v in pairs(pposix.meminfo()) do print(k,v, '|') end\n")
+            telnet.write(">local pposix = assert(require 'util.pposix'); for k,v in pairs(pposix.meminfo()) do print(k,v, '|') end\n")
             mem_response = telnet.read_until("Result:", 5)
             telnet.write(">collectgarbage('count')*1024\n")
             telnet.write("quit\n")
